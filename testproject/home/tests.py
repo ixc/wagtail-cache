@@ -492,7 +492,7 @@ class WagtailCacheTest(TestCase):
         self.assertEqual(KeyringItem.objects.count(), 1)
         # Get first key from keyring
         url = "http://%s%s" % ("testserver", self.page_cachedpage.get_url())
-        keyring_item = KeyringItem.objects.active_for_urls(url).first()
+        keyring_item = KeyringItem.objects.active_for_url_regexes(url).first()
         # Compare Keys
         self.assertEqual(keyring_item.url, url)
 
@@ -701,7 +701,7 @@ class WagtailCacheTest(TestCase):
             self.assertTrue(KeyringItem.objects.filter(key=key).exists())
             self.assertTrue(self.cache.get(key))
 
-    def test_active_for_urls(self):
+    def test_active_for_url_regexes(self):
         past_expiry = now() - datetime.timedelta(seconds=1)
         future_expiry = now() + datetime.timedelta(seconds=1)
         url = "https://example.com"
@@ -716,4 +716,6 @@ class WagtailCacheTest(TestCase):
             key="key-2",
             url=url,
         )
-        self.assertEqual(KeyringItem.objects.active_for_urls(url).count(), 1)
+        self.assertEqual(
+            KeyringItem.objects.active_for_url_regexes(url).count(), 1
+        )
