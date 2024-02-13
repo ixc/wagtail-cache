@@ -14,7 +14,7 @@ class KeyringItemManager(models.Manager):
         super().__init__()
         self._wagcache = caches[wagtailcache_settings.WAGTAIL_CACHE_BACKEND]
 
-    def set(self, url, key, expiry) -> models.Model:
+    def set(self, url, key, expiry) -> "KeyringItem":
         """
         Create or update a keyring item, clearing expired items too.
         """
@@ -53,11 +53,11 @@ class KeyringItemManager(models.Manager):
     def active(self):
         return self.filter(expiry__gt=now())
 
-    def active_for_url_regexes(self, urls):
+    def active_for_url_regexes(self, urls=None):
         if urls is None:
             urls = []
         if not isinstance(urls, (list, tuple)):
-            urls = list(urls)
+            urls = [urls]
         qs = self.active()
         if not urls:
             return qs
