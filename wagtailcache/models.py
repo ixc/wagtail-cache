@@ -24,7 +24,9 @@ class KeyringItemManager(models.Manager):
             url=url,
             key=key,
         )
-        self.clear_expired()
+
+        # Running this via a command instead 
+        # self.clear_expired()
         return item
 
     def bulk_delete_cache_keys(self, keys_qs: QuerySet) -> None:
