@@ -25,8 +25,9 @@ class KeyringItemManager(models.Manager):
             key=key,
         )
 
-        # Running this via a command instead 
-        # self.clear_expired()
+        if wagtailcache_settings.CLEAR_CACHE_ON_SET:
+            self.clear_expired()
+
         return item
 
     def bulk_delete_cache_keys(self, keys_qs: QuerySet) -> None:
