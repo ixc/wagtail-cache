@@ -232,7 +232,9 @@ class FetchFromCacheMiddleware(MiddlewareMixin):
 
         except Exception:
             # If the cache backend is currently unresponsive or errors out,
-            # return None and log the error.
+            # optionally raise or return None and log the error.
+            if not wagtailcache_settings.WAGTAIL_CACHE_SUPPRESS_GET_ERRORS:
+                raise
             setattr(request, "_wagtailcache_error", True)
             logger.exception("Could not fetch page from cache backend.")
             return None
@@ -361,6 +363,8 @@ class UpdateCacheMiddleware(MiddlewareMixin):
                 # Add a response header to indicate this was a cache miss.
                 _patch_header(response, Status.MISS)
             except Exception:
+                if not wagtailcache_settings.WAGTAIL_CACHE_SUPPRESS_SET_ERRORS:
+                    raise
                 _patch_header(response, Status.ERROR)
                 logger.exception("Could not update page in cache backend.")
 
