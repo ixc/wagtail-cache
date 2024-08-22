@@ -600,6 +600,16 @@ class WagtailCacheTest(TestCase):
             self.head_error(page.get_url())
             self.get_error(page.get_url())
 
+    @override_settings(
+        WAGTAIL_CACHE_BACKEND="error_get",
+        WAGTAIL_CACHE_SUPPRESS_GET_ERRORS=False,
+    )
+    def test_page_error_get_with_exception(self):
+        # Wagtail-cache should raise get exceptions if instructed.
+        for page in self.should_cache_pages:
+            with self.assertRaises(Exception, msg="Error in cache backend."):
+                self.client.get(page.get_url())
+
     @override_settings(WAGTAIL_CACHE_BACKEND="error_set")
     def test_page_error_set(self):
         # Wagtail-cache should handle errors when updating to cache backend.
@@ -610,6 +620,16 @@ class WagtailCacheTest(TestCase):
             # Second get should get an error too.
             self.head_error(page.get_url())
             self.get_error(page.get_url())
+
+    @override_settings(
+        WAGTAIL_CACHE_BACKEND="error_set",
+        WAGTAIL_CACHE_SUPPRESS_SET_ERRORS=False,
+    )
+    def test_page_error_set_with_exception(self):
+        # Wagtail-cache should raise set exceptions if instructed.
+        for page in self.should_cache_pages:
+            with self.assertRaises(Exception, msg="Error in cache backend."):
+                self.client.get(page.get_url())
 
     # ---- HOOKS ---------------------------------------------------------------
 

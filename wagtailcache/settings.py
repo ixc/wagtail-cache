@@ -35,6 +35,8 @@ class _DefaultSettings:
         r"^trk_.*$",  # Listrak
         r"^utm_.*$",  # Google Analytics
     ]
+    WAGTAIL_CACHE_SUPPRESS_GET_ERRORS = True
+    WAGTAIL_CACHE_SUPPRESS_SET_ERRORS = True
     WAGTAIL_CACHE_USE_RAW_DELETE = False
 
     def __getattribute__(self, attr: Text):
