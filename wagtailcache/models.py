@@ -25,7 +25,7 @@ class KeyringItemManager(models.Manager):
             key=key,
         )
 
-        if wagtailcache_settings.CLEAR_CACHE_ON_SET:
+        if wagtailcache_settings.WAGTAIL_CACHE_CLEAR_EXPIRED_ON_SET:
             self.clear_expired()
 
         return item
