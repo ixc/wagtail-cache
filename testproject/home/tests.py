@@ -620,6 +620,17 @@ class WagtailCacheTest(TestCase):
             with self.assertRaises(Exception, msg="Error in cache backend."):
                 self.client.get(page.get_url())
 
+    @override_settings(
+        WAGTAIL_CACHE_BACKEND="one_second",
+        WAGTAIL_CACHE_TIMEOUT_JITTER_FUNC=lambda timeout: timeout * 2,
+    )
+    def test_timeout_jitter(self):
+        # Wagtail-cache should apply jitter to the timeout.
+        url = self.page_cachedpage.get_url()
+        self.client.get(url)
+        time.sleep(1.5)
+        self.get_hit(url)
+
     # ---- HOOKS ---------------------------------------------------------------
 
     def test_request_hook_true(self):

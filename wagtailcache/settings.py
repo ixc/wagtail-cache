@@ -38,6 +38,7 @@ class _DefaultSettings:
     WAGTAIL_CACHE_CLEAR_EXPIRED_ON_SET = False
     WAGTAIL_CACHE_SUPPRESS_GET_ERRORS = True
     WAGTAIL_CACHE_SUPPRESS_SET_ERRORS = True
+    WAGTAIL_CACHE_TIMEOUT_JITTER_FUNC = None
     WAGTAIL_CACHE_USE_RAW_DELETE = False
 
     def __getattribute__(self, attr: Text):
