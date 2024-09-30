@@ -21,7 +21,7 @@ class KeyringItemManager(models.Manager):
         """
         # Ensure `full_clean` is called to validate the model.
         try:
-            item = self.get(url=url, key=key)
+            item = self.select_for_update().get(url=url, key=key)
             item.expiry = expiry
         except KeyringItem.DoesNotExist:
             item = KeyringItem(url=url, key=key, expiry=expiry)
