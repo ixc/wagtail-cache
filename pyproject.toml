@@ -5,9 +5,7 @@ requires = ["setuptools >= 65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-authors = [
-    {name = "CodeRed LLC", email = "info@coderedcorp.com"}
-]
+authors = [{ name = "CodeRed LLC", email = "info@coderedcorp.com" }]
 classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
@@ -22,12 +20,10 @@ classifiers = [
     "Framework :: Wagtail :: 5",
     "Framework :: Wagtail :: 6",
 ]
-dependencies = [
-    "wagtail>=3.0,<7",
-]
+dependencies = ["wagtail>=3.0,<8.0"]
 description = "A simple page cache for Wagtail based on the Django cache middleware."
 dynamic = ["version"]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 name = "wagtail-cache"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -39,7 +35,7 @@ Source = "https://github.com/coderedcorp/wagtail-cache"
 packages = ["wagtailcache"]
 
 [tool.setuptools.dynamic]
-version = {attr = "wagtailcache.__version__"}
+version = { attr = "wagtailcache.__version__" }
 
 
 # -- TOOLS ----------------------------
@@ -53,12 +49,7 @@ django_settings_module = "testproject.settings"
 [tool.mypy]
 ignore_missing_imports = true
 check_untyped_defs = true
-exclude = [
-    '^\..*',
-    'migrations',
-    'node_modules',
-    'venv',
-]
+exclude = ['^\..*', 'migrations', 'node_modules', 'venv']
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "testproject.settings"
